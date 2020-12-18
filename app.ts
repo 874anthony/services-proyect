@@ -15,16 +15,8 @@ if (process.env.NODE_ENV === 'development') {
 
 // // Routes
 import adminRouter from './routes/adminRoutes';
-// import propietarioRouter from './routes/propietarioRoutes';
-// import edificioRouter from './routes/edificioRoutes';
-// import apartamentoRouter from './routes/apartamentoRoutes';
-// import gestionVisitaRouter from './routes/gestionVisitaRoutes';
 
 // // Handling the middlewares routes
 app.use('/api/v1/admins', adminRouter);
-// app.use('/api/v1/propietarios', propietarioRouter);
-// app.use('/api/v1/edificios', edificioRouter);
-// app.use('/api/v1/apartamentos', apartamentoRouter);
-// app.use('/api/v1/visitas', gestionVisitaRouter);
 
 module.exports = app;

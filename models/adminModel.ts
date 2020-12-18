@@ -1,6 +1,6 @@
-import mysql from 'mysql';
-import validator from 'validator';
-import connection from '../server';
+// import mysql from 'mysql';
+// import validator from 'validator';
+// import connection from '../server';
 
 // export const query = CREATE TABLE `serviceproyectdb`.`administradores` (
 // `idAdministrador` INT(100) NOT NULL ,
@@ -13,4 +13,6 @@ import connection from '../server';
 // UNIQUE `telefonoAdmin` (`telefonoAdministrador`))
 // ENGINE = InnoDB;
 
-// // export default Administrador;
+// CREATE SEQUENCE admins_seq AS BIGINT START WITH 1 INCREMENT BY 1 MINVALUE 1
+
+// // // export default Administrador;
