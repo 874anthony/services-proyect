@@ -1,0 +1,52 @@
+{
+    "name": "service-proyect",
+    "version": "1.0.0",
+    "description": "Proyecto del servicio de hotelería.",
+    "main": "server.js",
+    "scripts": {
+        "_clean": "node utils/clean.js",
+        "copy-files": "copyfiles * -a -e *.ts dist",
+        "dev": "npm run _clean && npm run copy-files && tsc -w",
+        "start": "nodemon ./dist/server.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/874anthony/devcorp-proyect.git"
+    },
+    "keywords": [
+        "Proyecto",
+        "Service Hotels",
+        "Tony Dev"
+    ],
+    "author": "Anthony Acosta M.",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/874anthony/devcorp-proyect/issues"
+    },
+    "homepage": "https://github.com/874anthony/devcorp-proyect#readme",
+    "dependencies": {
+        "dotenv": "^8.2.0",
+        "express": "^4.17.1",
+        "morgan": "^1.10.0",
+        "mysql": "^2.18.1",
+        "nodemon": "^2.0.6",
+        "validator": "^13.5.2"
+    },
+    "devDependencies": {
+        "@types/express": "^4.17.9",
+        "@types/morgan": "^1.9.2",
+        "@types/mysql": "^2.15.16",
+        "@types/validator": "^13.1.1",
+        "copyfiles": "^2.4.1",
+        "eslint": "^7.15.0",
+        "eslint-config-airbnb": "^18.2.1",
+        "eslint-config-prettier": "^7.0.0",
+        "eslint-plugin-import": "^2.22.1",
+        "eslint-plugin-jsx-a11y": "^6.4.1",
+        "eslint-plugin-node": "^11.1.0",
+        "eslint-plugin-prettier": "^3.3.0",
+        "eslint-plugin-react": "^7.21.5",
+        "prettier": "^2.2.1",
+        "typescript": "^4.1.3"
+    }
+}
