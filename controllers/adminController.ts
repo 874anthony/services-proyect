@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import db from '../server';
+import mysql from 'mysql';
 
 export const createSequenceAdmin = async (
   req: Request,
@@ -7,8 +8,7 @@ export const createSequenceAdmin = async (
   next: NextFunction
 ) => {
   try {
-    const consulta =
-      'CREATE SEQUENCE admins_seq AS BIGINT START WITH 1 INCREMENT BY 1 MINVALUE 1';
+    const consulta = 'CREATE SEQUENCE admins_seq START WITH 1 INCREMENT BY 1';
 
     await db.query(consulta, (error, results, fields) => {
       res.status(200).json({
@@ -34,7 +34,7 @@ export const createAdminTable = async (
 ) => {
   try {
     const consulta =
-      'CREATE TABLE `serviceproyectdb`.`administradores` ( `idAdministrador` BIGINT(100) NOT NULL , `nombreRazonSocialAdministrador` VARCHAR(100) NOT NULL , `telefonoAdministrador` INT(10) NOT NULL , `direccionAdministrador` VARCHAR(50) NOT NULL , `emailAdministrador` VARCHAR(50) NOT NULL , PRIMARY KEY (`idAdministrador`), UNIQUE `emailAdmin` (`emailAdministrador`), UNIQUE `telefonoAdmin` (`telefonoAdministrador`)) ENGINE = InnoDB';
+      'CREATE TABLE `serviceproyectdb`.`administradores` ( `idAdministrador` BIGINT(100) NOT NULL , `nombreRazonSocialAdministrador` VARCHAR(100) NOT NULL , `telefonoAdministrador` BIGINT(10) NOT NULL , `direccionAdministrador` VARCHAR(50) NOT NULL , `emailAdministrador` VARCHAR(50) NOT NULL , PRIMARY KEY (`idAdministrador`), UNIQUE `emailAdmin` (`emailAdministrador`), UNIQUE `telefonoAdmin` (`telefonoAdministrador`)) ENGINE = InnoDB';
 
     await db.query(consulta, (error, results, fields) => {
       res.status(200).json({
@@ -93,25 +93,27 @@ export const createAdmin = async (
   next: NextFunction
 ) => {
   try {
-    // Escribo la consulta
-    const consulta =
-      'INSERT INTO `administradores` (`idAdministrador`, `nombreRazonSocialAdministrador`, `telefonoAdministrador`, `direccionAdministrador`, `emailAdministrador`) VALUES ?';
+    // Formulo la sentencia, dejando placeholders que me permitan usar template literal strings.
+    const sentencia = `INSERT INTO administradores SET 
+    idAdministrador = NEXT VALUE FOR admins_seq,
+    nombreRazonSocialAdministrador = ?,
+    telefonoAdministrador = ?,
+    direccionAdministrador = ?,
+    emailAdministrador = ?`;
 
-    // Defino los valores que inyectaré a la consulta.
-    const body = [
-      [
-        req.body.idAdministrador,
-        req.body.nombreRazonSocialAdministrador,
-        req.body.telefonoAdministrador,
-        req.body.direccionAdministrador,
-        req.body.emailAdministrador,
-      ],
+    // Obtengo los inserts que remplazarán los placeholders.
+    const inserts = [
+      req.body.nombreRazonSocialAdministrador,
+      req.body.telefonoAdministrador,
+      req.body.direccionAdministrador,
+      req.body.emailAdministrador,
     ];
 
-    console.log(body);
+    // Consulta final
+    const consulta = mysql.format(sentencia, inserts);
 
     // Hago la petición a la BD
-    await db.query(consulta, [body], (error, results, fields) => {
+    await db.query(consulta, (error, results, fields) => {
       res.status(200).json({
         status: 'success',
         data: {
